@@ -46,9 +46,13 @@ var addTask = function(){
   // Create a new list item with the text from the #new-task:
   var listItem = createNewTaskElement(taskInput.value);
   // Append listItem to incompleteTaskHolder
-  incompleteTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
-  taskInput.value = "";
+  if (taskInput.value == ""){
+    console.log("can't be empty");
+  } else {
+    incompleteTasksHolder.appendChild(listItem);
+    bindTaskEvents(listItem, taskCompleted);
+    taskInput.value = ""; 
+  }
 }
 
 
@@ -58,14 +62,17 @@ var editTask = function(){
   var listItem = this.parentNode;
   var editInput = listItem.querySelector("input[type=text]");
   var label = listItem.querySelector("label");
+  var editButton = listItem.querySelector("button.edit")
   // if the class of the parent is .editMode
   if (listItem.classList.contains("editMode")){
     // Switch from .editMode
     // label text become the input's value
+    editButton.innerHTML = "Edit"
     label.innerHTML = editInput.value
   } else {
       // switch to .editMode
       // input value becomes the label's text
+    editButton.innerHTML = "Save"
     editInput.value = label.innerHTML;;
   }
   
